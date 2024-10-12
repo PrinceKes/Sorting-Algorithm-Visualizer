@@ -1,0 +1,146 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sorting Algorithm Visualization</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f0f0f0;
+            text-align: center;
+            padding: 20px;
+        }
+
+        input, select, button {
+            padding: 10px;
+            margin: 10px;
+            font-size: 16px;
+        }
+
+        #sortCanvas {
+            border: 1px solid #ccc;
+            background-color: white;
+            margin-top: 20px;
+        }
+    </style>
+</head>
+<body>
+    <h1>Sorting Algorithm Visualization</h1>
+
+
+    <input type="text" id="arrayInput" placeholder="Enter numbers separated by commas" style="width: 300px;">
+    <select id="algorithm">
+        <option value="">Select Sorting Algorithm</option>
+        <option value="Bubble Sort">Bubble Sort</option>
+        <option value="Insertion Sort">Insertion Sort</option>
+        <option value="Selection Sort">Selection Sort</option>
+    </select>
+    <button id="startSorting">Start Sorting</button>
+
+    <canvas id="sortCanvas" width="800" height="400"></canvas>
+
+    <script>
+        document.getElementById("startSorting").addEventListener("click", function() {
+            const inputArray = document.getElementById("arrayInput").value.split(',').map(Number);
+            const selectedAlgorithm = document.getElementById("algorithm").value;
+            
+            if (inputArray.length === 0 || selectedAlgorithm === "") {
+                alert("Please input numbers and select a sorting algorithm.");
+                return;
+            }
+
+            startSorting(inputArray, selectedAlgorithm); 
+        });
+
+        function startSorting(array, algorithm) {
+            const canvas = document.getElementById("sortCanvas");
+            const ctx = canvas.getContext("2d");
+
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+            if (algorithm === "Bubble Sort") {
+                bubbleSort(array, ctx);
+            } else if (algorithm === "Insertion Sort") {
+                insertionSort(array, ctx);
+            } else if (algorithm === "Selection Sort") {
+                selectionSort(array, ctx);
+            }
+
+            drawArray(array, ctx);
+        }
+
+        function drawArray(array, ctx) {
+            const canvasWidth = ctx.canvas.width;
+            const canvasHeight = ctx.canvas.height;
+            const barWidth = canvasWidth / array.length;
+            const maxHeight = Math.max(...array);
+
+            for (let i = 0; i < array.length; i++) {
+                const barHeight = (array[i] / maxHeight) * canvasHeight;
+                ctx.fillStyle = "#4CAF50";
+                ctx.fillRect(i * barWidth, canvasHeight - barHeight, barWidth, barHeight);
+            }
+        }
+
+        async function bubbleSort(array, ctx) {
+            const delay = 100;
+
+            for (let i = 0; i < array.length; i++) {
+                for (let j = 0; j < array.length - i - 1; j++) {
+                    if (array[j] > array[j + 1]) {
+                        // Swap elements
+                        [array[j], array[j + 1]] = [array[j + 1], array[j]];
+
+                        drawArray(array, ctx);
+                        await new Promise(resolve => setTimeout(resolve, delay));
+                    }
+                }
+            }
+        }
+
+        async function insertionSort(array, ctx) {
+            const delay = 100;
+
+            for (let i = 1; i < array.length; i++) {
+                let key = array[i];
+                let j = i - 1;
+                
+                while (j >= 0 && array[j] > key) {
+                    array[j + 1] = array[j];
+                    j = j - 1;
+
+                    drawArray(array, ctx);
+                    await new Promise(resolve => setTimeout(resolve, delay));
+                }
+                array[j + 1] = key;
+
+                drawArray(array, ctx);
+                await new Promise(resolve => setTimeout(resolve, delay));
+            }
+        }
+
+        async function selectionSort(array, ctx) {
+            const delay = 100;
+
+            for (let i = 0; i < array.length; i++) {
+                let minIndex = i;
+
+                for (let j = i + 1; j < array.length; j++) {
+                    if (array[j] < array[minIndex]) {
+                        minIndex = j;
+                    }
+                }
+
+                if (minIndex !== i) {
+                    [array[i], array[minIndex]] = [array[minIndex], array[i]];
+
+                    drawArray(array, ctx);
+                    await new Promise(resolve => setTimeout(resolve, delay));
+                }
+            }
+        }
+    </script>
+</body>
+</html>
+

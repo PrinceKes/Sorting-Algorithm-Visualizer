@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sorting Algorithm Visualization</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            text-align: center;
+            background-color: #f0f0f0;
+            margin: 0;
+            padding: 20px;
+        }
+
+        canvas {
+            background-color: white;
+            border: 1px solid black;
+            display: block;
+            margin: 20px auto;
+        }
+
+        #controls {
+            margin: 20px;
+        }
+
+        .textbox, .button {
+            padding: 10px;
+            margin: 10px;
+            border-radius: 5px;
+        }
+
+        .textbox {
+            width: 200px;
+        }
+
+        .button {
+            background-color: #007BFF;
+            color: white;
+            border: none;
+            cursor: pointer;
+        }
+
+        .button:hover {
+            background-color: #0056b3;
+        }
+    </style>
+</head>
+<body>
+
+<h1>Sorting Algorithm Visualizer</h1>
+<div id="controls">
+    <input type="text" id="arrayInput" class="textbox" placeholder="Enter numbers, e.g. 5,2,9,1" />
+    <button id="startButton" class="button">Start Sorting</button>
+    <select id="algorithmSelect" class="textbox">
+        <option value="bubble">Bubble Sort</option>
+        <option value="insertion">Insertion Sort</option>
+        <option value="selection">Selection Sort</option>
+        <option value="merge">Merge Sort</option>
+        <option value="quick">Quick Sort</option>
+    </select>
+</div>
+
+<canvas id="sortCanvas" width="600" height="400"></canvas>
+
+<script src="sortVisualizer.js"></script>
+</body>
+</html>
